@@ -17,11 +17,18 @@ const Main = () => {
     const [movieValue, setMovieValue] = useState('')
     const [genreValue, setGenreValue] = useState('')
     const [moviesArr, setMoviesArr] = useState(movies)
-    const [selectValue, setSelectValue] = useState(0)
+    const [selectValue, setSelectValue] = useState('')
+    const [filteredMovies, setFilteredMovies] = useState(moviesArr)
 
     useEffect(() => {
+        const filtered = moviesArr.filter((movie) => {
+            return movie.genre.includes(selectValue)
+        })
 
-    }, [])
+        setFilteredMovies(filtered)
+        console.log(selectValue)
+
+    }, [selectValue, moviesArr])
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -39,17 +46,18 @@ const Main = () => {
         <div className='container my-5 p-5'>
             <h1 className='mb-5'>Movies Watch List</h1>
 
-            <select className="form-select mb-5" aria-label="Default select example">
-                <option selected>Filter by genre</option>
-                <option value="1" >Fantascienza</option>
-                <option value="2">Thriller</option>
-                <option value="3">Romantico</option>
-                <option value="4">Azione</option>
-                <option value="5">test</option>
+            <select className="form-select mb-5" aria-label="Default select example" value={selectValue} onChange={e => setSelectValue(e.target.value)}>
+                <option value=''>Filter by genre</option>
+                <option value="Fantascienza" >Fantascienza</option>
+                <option value="Thriller">Thriller</option>
+                <option value="Romantico">Romantico</option>
+                <option value="Azione">Azione</option>
+                <option value="Fantasy">Fantasy</option>
+                <option value="Animazione">Azione</option>
             </select>
 
             <ul className="list-group">
-                {moviesArr.map((movie, i) => {
+                {filteredMovies.map((movie, i) => {
                     return <ListItem movie={movie} index={i} remove={handleRemove} key={`movie-${i}`} />
                 })}
             </ul>
