@@ -19,16 +19,17 @@ const Main = () => {
     const [moviesArr, setMoviesArr] = useState(movies)
     const [selectValue, setSelectValue] = useState('')
     const [filteredMovies, setFilteredMovies] = useState(moviesArr)
+    const [search, setSearch] = useState('')
 
     useEffect(() => {
         const filtered = moviesArr.filter((movie) => {
-            return movie.genre.includes(selectValue)
+            return movie.genre.includes(selectValue) && movie.title.toLowerCase().includes(search.toLowerCase())
         })
 
         setFilteredMovies(filtered)
         console.log(selectValue)
 
-    }, [selectValue, moviesArr])
+    }, [selectValue, moviesArr, search])
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -46,15 +47,19 @@ const Main = () => {
         <div className='container my-5 p-5'>
             <h1 className='mb-5'>Movies Watch List</h1>
 
-            <select className="form-select mb-5" aria-label="Default select example" value={selectValue} onChange={e => setSelectValue(e.target.value)}>
-                <option value=''>Filter by genre</option>
-                <option value="Fantascienza" >Fantascienza</option>
-                <option value="Thriller">Thriller</option>
-                <option value="Romantico">Romantico</option>
-                <option value="Azione">Azione</option>
-                <option value="Fantasy">Fantasy</option>
-                <option value="Animazione">Azione</option>
-            </select>
+            <div className="d-flex justify-content-between mb-5">
+                <input type="text" className="form-control" value={search} onChange={e => setSearch(e.target.value)} placeholder='Search...'/>
+
+                <select className="form-select" aria-label="Default select example" value={selectValue} onChange={e => setSelectValue(e.target.value)}>
+                    <option value=''>Filter by genre</option>
+                    <option value="Fantascienza" >Fantascienza</option>
+                    <option value="Thriller">Thriller</option>
+                    <option value="Romantico">Romantico</option>
+                    <option value="Azione">Azione</option>
+                    <option value="Fantasy">Fantasy</option>
+                    <option value="Animazione">Animazione</option>
+                </select>
+            </div>
 
             <ul className="list-group">
                 {filteredMovies.map((movie, i) => {
