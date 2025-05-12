@@ -14,7 +14,8 @@ const movies = [
 
 
 const Main = () => {
-    const [value, setValue] = useState('')
+    const [movieValue, setMovieValue] = useState('')
+    const [genreValue, setGenreValue] = useState('')
     const [moviesArr, setMoviesArr] = useState(movies)
     const [selectValue, setSelectValue] = useState(0)
 
@@ -24,8 +25,9 @@ const Main = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        setMoviesArr([...moviesArr, { title: value, genre: 'test' }])
-        setValue('')
+        setMoviesArr([...moviesArr, { title: movieValue, genre: genreValue }])
+        setMovieValue('')
+        setGenreValue('')
     }
 
     const handleRemove = (i) => {
@@ -54,7 +56,8 @@ const Main = () => {
 
             <form onSubmit={handleSubmit}>
                 <div className='d-flex justify-content-between my-5'>
-                    <input type="text" className="form-control" placeholder='Add movie' value={value} onChange={e => setValue(e.target.value)} />
+                    <input type="text" className="form-control" placeholder='Add movie' value={movieValue} onChange={e => setMovieValue(e.target.value)} />
+                    <input type="text" className="form-control" placeholder='Add genre' value={genreValue} onChange={e => setGenreValue(e.target.value)} />
                     <button className="btn btn-primary">ADD</button>
                 </div>
             </form>
